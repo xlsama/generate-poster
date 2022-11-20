@@ -25,75 +25,75 @@
     <canvas id="canvas"></canvas>
 
     <script>
-      const CANVAS_WIDTH = 600;
+      const CANVAS_WIDTH = 600
 
-      const file = document.getElementById("file");
-      const canvas = document.getElementById("canvas");
-      const save = document.getElementById("save");
-      const ctx = canvas.getContext("2d");
+      const file = document.getElementById('file')
+      const canvas = document.getElementById('canvas')
+      const save = document.getElementById('save')
+      const ctx = canvas.getContext('2d')
 
-      canvas.width = CANVAS_WIDTH;
+      canvas.width = CANVAS_WIDTH
 
       file.onchange = function () {
-        const fileData = this.files[0];
-        const pattern = /^image/;
+        const fileData = this.files[0]
+        const pattern = /^image/
 
         if (!pattern.test(fileData.type)) {
-          alert("图片格式不正确");
-          return;
+          alert('图片格式不正确')
+          return
         }
 
-        const reader = new FileReader();
-        reader.readAsDataURL(fileData); //异步读取文件内容，结果用data:url的字符串形式表示
+        const reader = new FileReader()
+        reader.readAsDataURL(fileData) //异步读取文件内容，结果用data:url的字符串形式表示
 
         // /*当读取操作成功完成时调用*/
         reader.onload = function (e) {
           // draw upload image
-          const backgroundImage = new Image();
-          backgroundImage.src = this.result;
+          const backgroundImage = new Image()
+          backgroundImage.src = this.result
           backgroundImage.onload = function () {
-            const { width, height } = this;
+            const { width, height } = this
 
-            const ratio = width / height;
-            const canvas_height = 600 / ratio;
+            const ratio = width / height
+            const canvas_height = 600 / ratio
 
-            canvas.height = canvas_height;
+            canvas.height = canvas_height
 
-            console.log("draw background image");
-            ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+            console.log('draw background image')
+            ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height)
 
             // draw qrcode
-            const qrcode = new Image();
-            qrcode.src = "./qrcode_yige.baidu.com.png";
+            const qrcode = new Image()
+            qrcode.src = './qrcode_yige.baidu.com.png'
             qrcode.onload = function () {
-              console.log("draw qrcode");
+              console.log('draw qrcode')
               ctx.drawImage(
                 qrcode,
                 canvas.width - 100,
                 canvas.height - 100,
                 100,
                 100
-              );
+              )
 
               // draw author
-              console.log("draw author text");
-              ctx.font = "16px ui-sans-serif";
-              ctx.fillText("Hello world", 20, canvas.height - 20);
-            };
-          };
-        };
-      };
+              console.log('draw author text')
+              ctx.font = '16px ui-sans-serif'
+              ctx.fillText('Hello world', 20, canvas.height - 20)
+            }
+          }
+        }
+      }
 
       // donwload image
       save.onclick = function () {
-        const imgBase64Url = canvas.toDataURL("image/png");
-        const a = document.createElement("a");
-        document.body.appendChild(a);
-        a.href = imgBase64Url;
-        a.download = new Date().toLocaleString();
-        a.click();
-        a.remove();
-      };
+        const imgBase64Url = canvas.toDataURL('image/png')
+        const a = document.createElement('a')
+        document.body.appendChild(a)
+        a.href = imgBase64Url
+        a.download = new Date().toLocaleString()
+        a.click()
+        a.remove()
+      }
     </script>
   </body>
 </html>
